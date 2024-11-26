@@ -1,9 +1,11 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+;
 
 
 const Contact = () => {
-
-    const users =useLoaderData(); 
+const [users,setUsers]=useState();
+   
 
      const handleAddUser = event =>{
         event.preventDefault();
@@ -15,9 +17,17 @@ const Contact = () => {
         console.log(user)
 fetch('http://localhost:3000/users' ,{method:'POST',
     headers:{
-      'contest-type':'application/json'
+      'Content-Type':'application/json'
     },
     body:JSON.stringify(user),
+   })
+   .then(res=>res.json())
+   .then(data=>{
+    console.log(data);
+    const newUsers = [...users,data]
+    setUsers(newUsers);
+    form.reset()
+
    })
      }
     return (
